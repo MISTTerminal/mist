@@ -18,7 +18,7 @@ const srv = spawn(process.execPath, ['server/index.js'], { cwd: ROOT, env: { ...
 try {
   for (let i = 0; i < 40 && !log.includes('mist relay'); i++) await sleep(150);
   console.log('pages');
-  for (const p of ['/', '/app', '/docs', '/style.css', '/app.js', '/wallet.js', '/favicon.svg', '/fonts/bricolage.woff2', '/healthz']) ok(p, (await get(p)).status === 200);
+  for (const p of ['/', '/app', '/docs', '/style.css', '/app.js', '/wallet.js', '/pnl.js', '/favicon.svg', '/fonts/bricolage.woff2', '/healthz']) ok(p, (await get(p)).status === 200);
   const nf = await get('/nope'); ok('unknown page is a styled 404', nf.status === 404 && nf.text.includes('mist'));
   const app = await get('/app'); ok('strict content policy: scripts and connections only to this origin', /script-src 'self'/.test(app.headers.get('content-security-policy')) && /connect-src 'self'/.test(app.headers.get('content-security-policy')) && app.headers.get('referrer-policy') === 'no-referrer');
   ok('no cookies are set', !app.headers.get('set-cookie'));
