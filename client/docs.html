@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>MIST · Docs</title>
+<meta name="description" content="How the MIST terminal works: the vault, compartments, the mist route, Shield, Scatter and the relay.">
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/landing.css">
+<style>
+.doc { max-width: 820px; margin: 0 auto; padding: 120px clamp(18px, 4vw, 40px) 80px; } .doc h1 { font-size: clamp(44px, 8vw, 96px); letter-spacing: -.045em; line-height: .9; font-weight: 700; margin: 0 0 18px; background: linear-gradient(180deg, #fff, #8b5cf6 130%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .1em; }
+.doc h2 { font-size: 30px; letter-spacing: -.025em; font-weight: 600; margin: 56px 0 12px; padding-top: 18px; border-top: 1px solid var(--line2); color: var(--head); } .doc p, .doc li { font-size: 16px; line-height: 1.62; color: var(--ink2); } .doc b { color: var(--ink); }
+.doc code { font-family: var(--mono); font-size: 13px; background: rgba(167, 139, 250, .16); color: var(--head); padding: 2px 6px; border-radius: 6px; } .doc table { margin: 14px 0; font-size: 14px; } .doc td, .doc th { text-align: left !important; white-space: normal; vertical-align: top; } .doc th { position: static; }
+.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; } .toc a { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line2); background: var(--field); font-size: 13px; } .toc a:hover { border-color: var(--hi); color: #fff; }
+</style>
+</head>
+<body class="land">
+<header class="lnav"><a class="brand" href="/"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 9h20"/><path d="M3 16h17" opacity=".55"/><path d="M9 23h20" opacity=".28"/></svg><span>MIST</span></a><nav><a href="/#how">How it works</a><a href="/#token">$MIST</a><a href="/#faq">FAQ</a><a href="/docs">Docs</a></nav><a class="btn" href="/app">Open terminal</a></header>
+<article class="doc">
+<h1>Docs</h1>
+<p class="lead">MIST is a trading terminal for Solana tokens where every position sits in its own wallet and no wallet can be followed back to the one that funded it.</p>
+<div class="toc"><a href="#start">Getting started</a><a href="#vault">Vault</a><a href="#compartments">Compartments</a><a href="#route">Mist route</a><a href="#shield">Shield</a><a href="#scatter">Scatter</a><a href="#relay">Relay</a><a href="#fees">Fees</a><a href="#model">Privacy model</a></div>
+
+<h2 id="start">Getting started</h2>
+<ol><li>Open the terminal and press <b>Open vault</b>. Choose a passphrase and save the recovery key it shows you.</li><li>Open <b>Compartments</b> and press <b>Fund Reserve</b>. Pick the asset and chain you are paying from, enter the amount and a refund address, and send to the one-time deposit address. SOL arrives in Reserve, paid by the route.</li><li>Find a token in <b>Discover</b> or paste its address into search.</li><li>Press <b>Buy</b>. With "New compartment (isolated)" selected, the terminal derives a fresh wallet, pays it through the route and buys from it.</li><li>To exit, sell from the token page, then use <b>Return to Reserve</b> on the compartment and <b>Burn</b> it.</li></ol>
+
+<h2 id="vault">Vault</h2>
+<p>The vault is a 32-byte seed generated in your tab with the browser's secure random source. It is encrypted with a key stretched from your passphrase (PBKDF2-SHA256, 310,000 rounds) using AES-256-GCM, and stored in this browser's local storage together with your compartment labels and your own fill history. Nothing in the stored record is readable without the passphrase.</p>
+<p>The <b>recovery key</b> is the seed itself in base58. Entering it on any device rebuilds every compartment address. <b>Lock</b> removes the unlocked key from the tab. Closing the tab does the same.</p>
+
+<h2 id="compartments">Compartments</h2>
+<p>Compartment <code>n</code> uses the Ed25519 key <code>HMAC-SHA256(seed, "mist/compartment/n")</code>. Compartment 0 is <b>Reserve</b>, the wallet you fund and the one that pays for isolated buys. Every other compartment holds one position.</p>
+<table><thead><tr><th>Label</th><th>Meaning</th></tr></thead><tbody><tr><td><span class="pill ok">Paid by the route</span></td><td>The wallet's funding came from the route's own wallet. No transfer on Solana connects it to another wallet of yours.</td></tr><tr><td><span class="pill">Reserve</span></td><td>Your funding wallet. How private it is depends on how you fund it; funding from another chain through the route leaves no Solana link.</td></tr><tr><td><span class="pill">Empty</span></td><td>Created and not yet funded.</td></tr></tbody></table>
+<p><b>Key</b> exports a compartment's private key in the standard 64-byte base58 form that Phantom, Solflare and Backpack import.</p>
+
+<h2 id="route">Mist route</h2>
+<p>The route is NEAR Intents, reached through its 1Click interface. A quote returns a one-time deposit address. Once the deposit arrives, a solver pays the destination wallet in SOL from the solver's own Solana wallet. If the route cannot fill within its deadline, the deposit goes back to the refund address you gave.</p>
+<p>Two uses: <b>funding</b> from any supported chain and asset, and <b>internal moves</b> of SOL between your own compartments (Reserve to a new compartment on an isolated buy, and back again with Return to Reserve). An internal move usually completes in under a minute. Every route transfer is listed under <b>Activity</b> with its live status.</p>
+
+<h2 id="shield">Shield</h2>
+<p>With Shield on, the swap carries a tip for Jito block builders and the signed transaction is submitted to the block engine as a bundle-only order. It is not gossiped to the wider network before it lands, and it either lands whole or not at all. When the lane is busy the terminal retries, then reports that the order did not land with nothing spent. It never falls back to public sending by itself.</p>
+
+<h2 id="scatter">Scatter</h2>
+<p>Scatter splits one buy into 2 to 6 slices of random size and sends them at random moments inside a time window, each priced and signed separately. The tab must stay open while a scattered order runs; the order card shows each slice.</p>
+
+<h2 id="relay">Relay</h2>
+<p>The relay is the only server your browser contacts. It forwards market data, quotes, token pictures, balance lookups and signed transactions. It has no database, keeps no accounts, sets no cookies and writes no request log. The page's content policy (<code>connect-src 'self'</code>, <code>script-src 'self'</code>) stops the page from contacting anything else, and <code>referrer-policy: no-referrer</code> keeps outgoing links from carrying where you came from.</p>
+
+<h2 id="fees">Fees</h2>
+<table><thead><tr><th>Item</th><th>Amount</th></tr></thead><tbody><tr><td>Network fee</td><td>About 0.000005 SOL per signature</td></tr><tr><td>Shield tip</td><td>0.0001 SOL per order</td></tr><tr><td>Token account deposit</td><td>About 0.002 SOL per new token, returned by the network when the account is closed</td></tr><tr><td>Route</td><td>The solver's spread, shown in the quote before you send</td></tr></tbody></table>
+
+<h2 id="model">Privacy model</h2>
+<p><b>Hidden:</b> which wallets belong to the same person; where a compartment's money came from; your address and viewing habits from data providers; your order from sandwich bots before it lands.</p>
+<p><b>Public, as on any chain:</b> each compartment's own trades and balance. A determined observer can still compare amounts and timing across the route, which is why funding from another chain, round-number avoidance and Scatter exist.</p>
+<p><b>Your part:</b> keep the recovery key offline, do not send directly between compartments from an outside wallet, and do not reuse a compartment for a second token if you want the two positions kept apart.</p>
+</article>
+<footer class="lfoot"><span>MIST</span><a href="/">Home</a><a href="/app">Terminal</a><span class="mute">No accounts. No cookies. No log.</span></footer>
+</body>
+</html>
