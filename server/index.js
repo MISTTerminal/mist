@@ -13,7 +13,7 @@ const RPCS = (process.env.RPC_URL || 'https://solana-rpc.publicnode.com,https://
 const JITO = process.env.JITO_URL || 'https://mainnet.block-engine.jito.wtf/api/v1/transactions';
 const JUP = process.env.JUP_URL || 'https://lite-api.jup.ag', GT = 'https://api.geckoterminal.com/api/v2', DATA = 'https://datapi.jup.ag', DS = 'https://api.dexscreener.com', ONE = process.env.ONECLICK_URL || 'https://1click.chaindefuser.com';
 const FEE_BPS = Math.min(100, Math.max(0, +process.env.FEE_BPS || 0)), FEE_ACCOUNT = process.env.FEE_ACCOUNT || '', ROUTE_FEE_TO = process.env.ROUTE_FEE_TO || '', ROUTE_FEE_BPS = +process.env.ROUTE_FEE_BPS || 0;
-const TOKEN_MINT = process.env.TOKEN_MINT || '', SITE = { x: /^https:\/\//.test(process.env.X_URL || '') ? process.env.X_URL : '', gh: /^https:\/\//.test(process.env.GH_URL || '') ? process.env.GH_URL : '', mint: TOKEN_MINT };
+const TOKEN_MINT = process.env.TOKEN_MINT || 'ExdT9yyZojJ8ktkSUq6T3fG6m2Gc1RUjMXTHwns2pump', X_DEFAULT = 'https://x.com/MISTTerminal', GH_DEFAULT = 'https://github.com/MISTTerminal/mist', SITE = { x: /^https:\/\//.test(process.env.X_URL || '') ? process.env.X_URL : X_DEFAULT, gh: /^https:\/\//.test(process.env.GH_URL || '') ? process.env.GH_URL : GH_DEFAULT, mint: TOKEN_MINT };
 const SOL = 'So11111111111111111111111111111111111111112', SOL_ASSET = 'nep141:sol.omft.near';
 const B58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 process.on('uncaughtException', (e) => { console.error('uncaught', e?.message || e); if (e?.code === 'EADDRINUSE') process.exit(1); });

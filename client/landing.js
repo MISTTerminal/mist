@@ -74,5 +74,5 @@ document.addEventListener('error', (e) => { if (e.target?.tagName === 'IMG' && e
 fetch('/api/config').then((r) => r.json()).then((c) => {
   if (c.x) { const x = document.getElementById('xlink'); x.href = c.x; x.hidden = false; }
   if (c.gh) { const g = document.getElementById('ghlink'); g.href = c.gh; g.hidden = false; }
-  if (c.mint) { document.getElementById('ca').textContent = c.mint; const b = document.getElementById('cabtn'); b.hidden = false; b.addEventListener('click', async () => { try { await navigator.clipboard.writeText(c.mint); b.textContent = 'Copied'; setTimeout(() => { b.textContent = 'Copy'; }, 1500); } catch {} }); }
+  if (c.mint) { document.getElementById('ca').textContent = c.mint; document.getElementById('calead').textContent = '$MIST is live on Solana. This is the only contract address; copy it from here or open it straight in the terminal.'; const tb = document.getElementById('tradebtn'); tb.href = '/app#/t/' + c.mint; tb.hidden = false; const b = document.getElementById('cabtn'); b.hidden = false; b.addEventListener('click', async () => { try { await navigator.clipboard.writeText(c.mint); b.textContent = 'Copied'; setTimeout(() => { b.textContent = 'Copy'; }, 1500); } catch {} }); }
 }).catch(() => {});

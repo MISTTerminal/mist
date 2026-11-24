@@ -2,7 +2,7 @@
 
 [![license](https://img.shields.io/badge/license-MIT-a78bfa)](LICENSE) [![node](https://img.shields.io/badge/node-%E2%89%A5%2022-a78bfa)](.node-version) [![dependencies](https://img.shields.io/badge/dependencies-0-a78bfa)](package.json) [![checks](https://img.shields.io/badge/end--to--end%20checks-52-a78bfa)](test)
 
-**[mistterminal.xyz](https://mistterminal.xyz)** · [Terminal](https://mistterminal.xyz/app) · [Docs](https://mistterminal.xyz/docs) · [Changelog](CHANGELOG.md) · [Security](SECURITY.md)
+**[mistterminal.xyz](https://mistterminal.xyz)** · [Terminal](https://mistterminal.xyz/app) · [Docs](https://mistterminal.xyz/docs) · [X](https://x.com/MISTTerminal) · [Changelog](CHANGELOG.md) · [Security](SECURITY.md)
 
 The private trading terminal for Solana. Every position sits in its own wallet, and no wallet can be followed back to the one that funded it.
 

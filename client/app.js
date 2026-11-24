@@ -280,4 +280,4 @@ const rerender = () => { if ($('.veil')) return; const h = location.hash; if (/^
 window.addEventListener('hashchange', route);
 if (location.pathname.startsWith('/t/')) history.replaceState(null, '', '/app#/t/' + location.pathname.slice(3));
 setMist(cfg.misted);
-(async () => { await W.resume(); await refreshVault(true); route(); setInterval(() => { if (!document.hidden && W.unlocked()) refreshVault(); }, 20000); api('/api/config').then((c) => setSol(c.sol)).catch(() => {}); })();
+(async () => { await W.resume(); await refreshVault(true); route(); setInterval(() => { if (!document.hidden && W.unlocked()) refreshVault(); }, 20000); api('/api/config').then((c) => { setSol(c.sol); if (c.mint) { const m = $('#mistTab'); m.href = '#/t/' + c.mint; m.hidden = false; } if (c.x) { const x = $('#xTab'); x.href = c.x; x.hidden = false; } }).catch(() => {}); })();
