@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#06040c">
+<title>MIST · Trade unseen</title>
+<meta name="description" content="MIST is the private trading terminal for Solana. A fresh wallet for every position, funded through a route nobody can follow back to you.">
+<meta property="og:title" content="MIST · Trade unseen">
+<meta property="og:description" content="The private trading terminal for Solana. A fresh wallet for every position.">
+<link rel="icon" href="/favicon.svg">
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/landing.css">
+</head>
+<body class="land">
+<header class="lnav"><a class="brand" href="/"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 9h20"/><path d="M3 16h17" opacity=".55"/><path d="M9 23h20" opacity=".28"/></svg><span>MIST</span></a><nav><a href="#how">How it works</a><a href="#compare">Compare</a><a href="#token">$MIST</a><a href="#faq">FAQ</a><a href="/docs">Docs</a><a id="xlink" hidden target="_blank" rel="noopener noreferrer">X</a><a id="ghlink" hidden target="_blank" rel="noopener noreferrer">GitHub</a></nav><a class="btn" href="/app">Open terminal</a></header>
+
+<section class="hero" id="hero">
+  <canvas id="tape" aria-hidden="true"></canvas>
+  <h1 aria-label="Trade unseen"><span>TRADE</span><span>UNSEEN</span></h1>
+  <canvas id="mist" aria-hidden="true"></canvas>
+  <div class="foot"><p>The private trading terminal for Solana.<small>Move your cursor to clear the mist</small></p><div><a class="btn big" href="/app">Open terminal</a><a class="btn big ghost" href="/docs">Read the docs</a></div></div>
+</section>
+
+<section class="state"><p id="words">MIST gives every position its own wallet and hides the thread between them, so the chain sees trades and never the trader.</p></section>
+
+<section class="band" id="how">
+  <p class="eyebrow">What makes it private</p>
+  <h2>Four layers between you and the watchers.</h2>
+  <div class="four">
+    <article class="glass"><b>01</b><svg viewBox="0 0 74 74" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="6" width="26" height="26" rx="6"/><rect x="42" y="6" width="26" height="26" rx="6" opacity=".6"/><rect x="6" y="42" width="26" height="26" rx="6" opacity=".6"/><rect x="42" y="42" width="26" height="26" rx="6" opacity=".3"/></svg><h3>Compartments</h3><p>Each token you buy lives in a fresh wallet, derived in your browser from a single seed. One position being found tells nobody about the next.</p></article>
+    <article class="glass"><b>02</b><svg viewBox="0 0 74 74" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="37" r="5"/><circle cx="64" cy="37" r="5"/><path d="M15 37h8" /><path d="M51 37h8"/><path d="M27 26c6-6 14 6 20 0M27 37c6-6 14 6 20 0M27 48c6-6 14 6 20 0" opacity=".6"/></svg><h3>The mist route</h3><p>Compartments are paid by a cross-chain route from its own wallet. No explorer shows your Reserve, or your main wallet, paying them.</p></article>
+    <article class="glass"><b>03</b><svg viewBox="0 0 74 74" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M37 6 62 16v18c0 16-10 27-25 34C22 61 12 50 12 34V16L37 6Z"/><path d="M37 20v34" opacity=".5"/><path d="M24 31h26" opacity=".5"/></svg><h3>Shield</h3><p>Orders go straight to block builders in a private lane. They are never shown to the bots that sandwich public orders.</p></article>
+    <article class="glass"><b>04</b><svg viewBox="0 0 74 74" fill="currentColor"><rect x="6" y="40" width="8" height="28" rx="3"/><rect x="20" y="22" width="8" height="46" rx="3" opacity=".7"/><rect x="34" y="48" width="8" height="20" rx="3" opacity=".5"/><rect x="48" y="12" width="8" height="56" rx="3" opacity=".85"/><rect x="62" y="34" width="8" height="34" rx="3" opacity=".4"/></svg><h3>Scatter</h3><p>Split a buy into random slices over a time window, so size and timing stop looking like one trader.</p></article>
+  </div>
+</section>
+
+<section class="live" id="live">
+  <p class="eyebrow">On the terminal right now</p>
+  <div class="marq" id="m1"></div>
+  <div class="marq rev" id="m2"></div>
+</section>
+
+<div class="lightwrap"><section class="band" id="steps">
+  <p class="eyebrow">An isolated buy, step by step</p>
+  <h2>From your money to a position with <em>no trail</em>.</h2>
+  <ol class="steps"><li><b>1</b><span>You fund Reserve from any chain. The route pays it in SOL.</span></li><li><b>2</b><span>You press Buy. A new compartment wallet is derived in your tab.</span></li><li><b>3</b><span>Reserve pays into the route. The route pays the compartment.</span></li><li><b>4</b><span>The compartment buys, signed in your tab, through the private lane.</span></li><li><b>5</b><span>Sell, return the SOL through the route, burn the compartment.</span></li></ol>
+</section></div>
+
+<section class="band split">
+  <div><p class="eyebrow">The relay</p><h2>Your browser speaks to one server. It remembers nothing.</h2><p class="lead">Charts, quotes, token pictures and transactions all pass through the MIST relay, so data providers and RPC nodes never see your address or what you are watching. There are no accounts, no cookies and no request log, and the page is locked by policy from loading anything off-site.</p></div>
+  <div class="glass path"><div class="node">Your tab<small>keys, signing, history</small></div><i></i><div class="node dark">MIST relay<small>stateless</small></div><i></i><div class="node">Solana · market data · route<small>see the relay, not you</small></div></div>
+</section>
+
+<section class="band" id="compare">
+  <p class="eyebrow">Same trade, different trail</p>
+  <h2>What an observer can piece together.</h2>
+  <div class="glass cmp"><table><thead><tr><th></th><th>A typical terminal</th><th>MIST</th></tr></thead><tbody>
+    <tr><td>Wallets</td><td>One wallet holds every position, so one address shows the whole book.</td><td>One wallet per position, all derived from a seed only you hold.</td></tr>
+    <tr><td>Funding trail</td><td>Your main wallet pays the trading wallet directly.</td><td>The route pays each compartment from its own wallet.</td></tr>
+    <tr><td>Order visibility</td><td>Broadcast publicly, open to sandwich bots.</td><td>Private lane to block builders, landing whole or not at all.</td></tr>
+    <tr><td>Order shape</td><td>One size, one moment.</td><td>Random slices across a time window.</td></tr>
+    <tr><td>Who sees your address</td><td>Every data provider and RPC node the page calls.</td><td>Only the relay, which keeps no log.</td></tr>
+    <tr><td>Account</td><td>Email, social login or a hosted wallet.</td><td>None. A passphrase and a recovery key, both yours.</td></tr>
+  </tbody></table></div>
+</section>
+
+<section class="band" id="token">
+  <div class="glass tokenbox"><div><p class="eyebrow">$MIST</p><h2>The token of the terminal.</h2><p class="lead">$MIST launches on Solana. The contract address is published here and on the terminal the moment it is live.</p></div><div class="ca"><span id="ca">Contract address at launch</span><button class="btn ghost" id="cabtn" hidden>Copy</button></div></div>
+</section>
+
+<section class="band" id="faq">
+  <p class="eyebrow">FAQ</p>
+  <h2>Questions, answered plainly.</h2>
+  <div class="faq">
+    <details open><summary>What is MIST?</summary><p>A trading terminal for Solana tokens built around privacy. It has what a terminal needs (trending, new pairs, live charts, a trade tape, one-click buys and sells) and adds a vault of compartment wallets, a private funding route, a private order lane and scattered orders.</p></details>
+    <details><summary>Who holds my keys?</summary><p>You do. A 32-byte seed is generated in your tab, encrypted with your passphrase (PBKDF2 with 310,000 rounds, then AES-256-GCM) and stored only in your browser. Every compartment key is derived from it. Transactions are signed in the tab with Ed25519 and reach the relay already signed. The recovery key rebuilds every compartment on any device, and each compartment key can be exported to any Solana wallet.</p></details>
+    <details><summary>How does the mist route break the link between wallets?</summary><p>The route is NEAR Intents. You deposit to a one-time address, on Solana or on another chain, and a solver pays the destination wallet in SOL from the solver's own wallet. On Solana the compartment's history starts with a payment from the route, not from you. Moving SOL between two of your own compartments works the same way.</p></details>
+    <details><summary>What can still be seen?</summary><p>Everything a compartment does on Solana is public, as with any wallet. What is missing is the thread from one compartment to another and to the wallet that funded them. Amounts and timing can still be compared by a determined observer, which is what Scatter and funding from another chain are for. A direct deposit to a compartment address is visible as a payment from the sender; the terminal labels those compartments so you always know which is which.</p></details>
+    <details><summary>What does Shield do?</summary><p>With Shield on, the signed order is handed to Jito block builders as a private bundle with a small tip, and it only lands if it lands whole. It is not broadcast where sandwich bots watch. If the private lane cannot take the order, the terminal tells you and does not quietly send it the public way.</p></details>
+    <details><summary>Which chains can I fund from?</summary><p>Any chain the route supports, including Solana, Ethereum, Base, Arbitrum, BNB Chain, Bitcoin, Zcash, NEAR, Tron, Sui, XRP and more, in SOL, USDC, USDT, ETH, BTC and other majors. You always receive SOL in the compartment you chose.</p></details>
+    <details><summary>What does the relay know about me?</summary><p>Nothing it keeps. It has no accounts and sets no cookies. It writes no request log. Rate limiting uses a salted hash that is thrown away every minute and re-salted on every restart. The source is open so this can be checked.</p></details>
+    <details><summary>What does it cost?</summary><p>Network fees, the private-lane tip (0.0001 SOL per order by default) and the route's own spread on transfers. A new token account on Solana holds a 0.002 SOL deposit that the network returns when the account is closed.</p></details>
+    <details><summary>What are the risks?</summary><p>Tokens on Solana are volatile and many go to zero. If you lose both your passphrase and your recovery key, nobody can recover the vault. Clearing your browser data removes the vault from that browser, so keep the recovery key somewhere safe before you deposit.</p></details>
+  </div>
+</section>
+
+<section class="band end"><h2>Disappear into the tape.</h2><div><a class="btn big" href="/app">Open terminal</a><a class="btn big ghost" href="/docs">Read the docs</a></div></section>
+<footer class="lfoot"><span>MIST</span><a href="/docs">Docs</a><a href="/app">Terminal</a><span class="mute">No accounts · No cookies · No log</span></footer>
+<script type="module" src="/landing.js"></script>
+</body>
+</html>
